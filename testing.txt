@@ -1,0 +1,37 @@
+//Code to test program
+bool findValue(int value, int** matrix, int n)
+{
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (matrix[i][j] == value) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void runTests() {
+	for (int n = 3; n < 100; n++) {
+		if (n == 2) {
+			continue;
+		}
+		int** magic = magicSquare(n);
+		const int c = magicConstant(n);
+		int value = 0;
+		for (int i = 0; i < n; i++)
+		{
+			int rowsum = 0;
+			int colsum = 0;
+			value++;
+			for (int j = 0; j < n; j++) {
+				assert(findValue(value, magic, n));
+				rowsum += magic[i][j];
+				colsum += magic[j][i];
+			}
+			assert(rowsum == c);
+			assert(colsum == c);
+		}
+		freeMatrix(magic, n);
+	}
+}
